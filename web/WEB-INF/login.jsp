@@ -4,6 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>My Notes</title>
+		
 	</head>
 	<body>
 		<h1>Notes App</h1>
@@ -13,5 +14,11 @@
 			password: <input type="password" name="password"><br>
 			<input type="submit" value="Sign in">
 		</form>
+		
+		<br>
+		
+		<p>
+			<a href ="forgot">Forgot password?</a>
+		</p>
 	</body>
 </html>

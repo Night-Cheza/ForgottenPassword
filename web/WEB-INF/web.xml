@@ -50,7 +50,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ForgotPasswordServlet</servlet-name>
-        <url-pattern>/ForgotPasswordServlet</url-pattern>
+        <url-pattern>/forgot</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
