@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -23,6 +24,7 @@ public class GmailService {
 	public static void sendMail(String to, String subject, String template, HashMap<String, String> tags) throws Exception {
 
 		String body = "";
+
 		try {
 			// read whole template into a single variable (body)
 			BufferedReader br = new BufferedReader(new FileReader(new File(template)));
@@ -57,8 +59,8 @@ public class GmailService {
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 
-		Session session = Session.getInstance(props,
-			new javax.mail.Authenticator() {
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+				@Override
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(username, password);
 				}

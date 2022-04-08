@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS `notesdb`.`user` (
   `role` INT(11) NOT NULL,
   PRIMARY KEY (`email`),
   CONSTRAINT `fk_user_role`
-    FOREIGN KEY (`role`)
-    REFERENCES `notesdb`.`role` (`role_id`)
+	FOREIGN KEY (`role`)
+	REFERENCES `notesdb`.`role` (`role_id`)
 );
 
 
@@ -42,9 +42,9 @@ INSERT INTO `user` (`email`,`active`,`first_name`,`last_name`,`password`,`role`)
 	VALUES ('cprg352+barb@gmail.com', true, 'Barb','Barber', 'password', 2);
 
 INSERT INTO `note` (`Title`, `Contents`, `Owner`)
-    VALUES ('Quote #1', 'Writing is nature''s way of letting you know how sloppy your thinking is.', 'cprg352+anne@gmail.com');
+	VALUES ('Quote #1', 'Writing is nature''s way of letting you know how sloppy your thinking is.', 'cprg352+anne@gmail.com');
 INSERT INTO `note` (`Title`, `Contents`, `Owner`)
-    VALUES ('Another quote', '"Java is to JavaScript as ham is to hamster." -  Jeremy Keith', 'cprg352+anne@gmail.com');
+	VALUES ('Another quote', '"Java is to JavaScript as ham is to hamster." -  Jeremy Keith', 'cprg352+anne@gmail.com');
 INSERT INTO `note` (`Title`, `Contents`, `Owner`)
-    VALUES ('Barb''s Note', 'Anne should not see this note.', 'cprg352+barb@gmail.com');
+	VALUES ('Barb''s Note', 'Anne should not see this note.', 'cprg352+barb@gmail.com');
 userdb

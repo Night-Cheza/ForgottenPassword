@@ -23,17 +23,19 @@ public class AccountService {
 
 		public boolean forgotPassword(String email, String path) {
 		UserDB userDB = new UserDB();
-//		char[] password = new char[8];
+		char[] password = new char[8];
 
-//		String capLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-//		String lowLetters = "abcdefghijklmnopqrstuvwxyz";
-//		String specialChar = "!@#$";
-//		String num = "1234567890";
-//		String mix = capLetters + lowLetters + specialChar + num;
-//
-//		for(int i = 0; i < 8 ; i++) {
-//			password[i] = mix.charAt(0 + (int) (Math.random() * mix.length()-1));
-//		}
+		String capLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String lowLetters = "abcdefghijklmnopqrstuvwxyz";
+		String specialChar = "!@#$";
+		String num = "1234567890";
+		String mix = capLetters + lowLetters + specialChar + num;
+
+		for(int i = 0; i < 8 ; i++) {
+			password[i] = mix.charAt(0 + (int) (Math.random() * mix.length()-1));
+		}
+
+
 
 		try {
 			User user = userDB.get(email);
@@ -44,7 +46,7 @@ public class AccountService {
 			HashMap<String, String> tags = new HashMap<>();
 			tags.put("firstname", user.getFirstName());
 			tags.put("lastname", user.getLastName());
-
+			tags.put("password", Arrays.toString(password));
 
 			GmailService.sendMail(to, subject, template, tags);
 			return true;
