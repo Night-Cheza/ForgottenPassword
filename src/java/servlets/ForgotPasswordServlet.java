@@ -2,7 +2,6 @@ package servlets;
 
 import dataaccess.UserDB;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.User;
 import services.AccountService;
+import services.GmailService;
 
 /**
  *
@@ -27,9 +27,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		getServletContext().getRequestDispatcher("/WEB-INF/forgot.jsp").forward(request, response);
-
 	}
 
 	/**
@@ -43,22 +41,24 @@ public class ForgotPasswordServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
-		String path = getServletContext().getRealPath("/WEB-INF");
+		String action =request.getParameter("action");
 
 		// save email to a cookie
 		Cookie cookie = new Cookie("email", email);
 		cookie.setMaxAge(60 * 60 * 24 * 365 * 3);
 		response.addCookie(cookie);
 
-		UserDB userDB = new UserDB();
-		User user = userDB.get(email);
+//		UserDB userDB = new UserDB();
+//		User user = userDB.get(email);
+		AccountService accService = new AccountService();
+		String path = getServletContext().getRealPath("/WEB-INF");
 
-		if(user == null) {
+		if(action != null && action.equals("forgot")) {
 			request.setAttribute("message", "If the address you entered is valid, you will receive an email very soon. Please check your email for your password");
-		} else {
-			request.setAttribute("message", "If the address you entered is valid, you will receive an email very soon. Please check your email for your password");
-			AccountService accService = new AccountService();
-			accService.forgotPassword( email, path );
+
+			if(accService.forgotPassword( email, path )) {
+				GmailService gs = new GmailService();
+			}
 		}
 
 //		HttpSession session = request.getSession();
