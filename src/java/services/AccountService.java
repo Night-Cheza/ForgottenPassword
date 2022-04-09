@@ -25,6 +25,7 @@ public class AccountService {
 		UserDB userDB = new UserDB();
 		char[] password = new char[8];
 
+		//generate random password
 		String capLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String lowLetters = "abcdefghijklmnopqrstuvwxyz";
 		String specialChar = "!@#$";
@@ -36,6 +37,7 @@ public class AccountService {
 		}
 
 		try {
+			//sendin user an email with new password
 			User user = userDB.get(email);
 			String to = user.getEmail();
 			String newPassword = Arrays.toString(password);

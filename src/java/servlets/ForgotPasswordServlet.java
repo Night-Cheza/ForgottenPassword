@@ -47,6 +47,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 		AccountService accService = new AccountService();
 		String path = getServletContext().getRealPath("/WEB-INF");
 
+		//check if filed is filled
 		if(email == null || email.isEmpty()) {
 			session.setAttribute("message", "Please enter your email");
 		} else {
@@ -54,7 +55,9 @@ public class ForgotPasswordServlet extends HttpServlet {
 		}
 		getServletContext().getRequestDispatcher("/WEB-INF/forgot.jsp").forward(request, response);
 
+		//check if user exists in database
 		if(email.equals(user.getEmail())) {
+			//send an email to the specified email address
 			String to = "leya.cheza@gmail.com";
 			String subject = user + " forgot their password";
 			String template = request.getParameter("forgot");
@@ -65,6 +68,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 			}
 		}
 
+		//to send a new password to the user
 		accService.forgotPassword(email, path);
 	}
 }
