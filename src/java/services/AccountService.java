@@ -21,7 +21,7 @@ public class AccountService {
 		return null;
 	}
 
-		public boolean forgotPassword(String email, String path) {
+	public boolean forgotPassword(String email, String path) {
 		UserDB userDB = new UserDB();
 		char[] password = new char[8];
 
@@ -35,18 +35,18 @@ public class AccountService {
 			password[i] = mix.charAt(0 + (int) (Math.random() * mix.length()-1));
 		}
 
-
-
 		try {
 			User user = userDB.get(email);
 			String to = user.getEmail();
+			String newPassword = Arrays.toString(password);
+			user.setPassword(userDB.updatePassword(email, newPassword));
 			String subject = "New Password";
 			String template = path + "/emailTemplate/forgotPassword.html";
 
 			HashMap<String, String> tags = new HashMap<>();
 			tags.put("firstname", user.getFirstName());
 			tags.put("lastname", user.getLastName());
-			tags.put("password", Arrays.toString(password));
+			tags.put("password",  user.getPassword());
 
 			GmailService.sendMail(to, subject, template, tags);
 			return true;

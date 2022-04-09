@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<h1>Forgot Password</h1>
-		<form action="forgot" method="post" name = "template">
+		<form action="forgot" method="post" name = "forgot">
 			name: <input type="text" name="name"><br>
 			email: <input type="text" name="email"><br>
 			<button type = "submit">Submit</button>

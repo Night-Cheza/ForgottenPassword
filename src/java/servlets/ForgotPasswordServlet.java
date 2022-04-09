@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import models.User;
 import services.AccountService;
 import services.GmailService;
@@ -39,30 +40,24 @@ public class ForgotPasswordServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		String email = request.getParameter("email");
 		UserDB userDB = new UserDB();
 		User user = userDB.get(email);
-
-		if(email == null || email.isEmpty()) {
-			request.setAttribute("message", "Please enter your email");
-		} else {
-			request.setAttribute("message", "If the address you entered is valid, you will receive an email very soon. Please check your email for your password");
-		}
-
-		// save email to a cookie
-		Cookie cookie = new Cookie("email", email);
-		cookie.setMaxAge(60 * 60 * 24 * 365 * 3);
-		response.addCookie(cookie);
-
-
 		AccountService accService = new AccountService();
 		String path = getServletContext().getRealPath("/WEB-INF");
 
-		if(accService.forgotPassword(email, path)) {
+		if(email == null || email.isEmpty()) {
+			session.setAttribute("message", "Please enter your email");
+		} else {
+			session.setAttribute("message", "If the address you entered is valid, you will receive an email very soon. Please check your email for your password");
+		}
+		getServletContext().getRequestDispatcher("/WEB-INF/forgot.jsp").forward(request, response);
+
+		if(email.equals(user.getEmail())) {
 			String to = "leya.cheza@gmail.com";
-			String from = "password.wanted@sait.ca";
 			String subject = user + " forgot their password";
-			String template = request.getParameter("template");
+			String template = request.getParameter("forgot");
 
 			try { 
 				GmailService.sendMail(to, subject, template, true);
@@ -70,11 +65,6 @@ public class ForgotPasswordServlet extends HttpServlet {
 			}
 		}
 
-
-
-//		HttpSession session = request.getSession();
-		
-
-		getServletContext().getRequestDispatcher("/WEB-INF/forgot.jsp").forward(request, response);
+		accService.forgotPassword(email, path);
 	}
 }
