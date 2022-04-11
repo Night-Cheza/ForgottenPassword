@@ -39,7 +39,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 		AccountService accService = new AccountService();
 		String path = getServletContext().getRealPath("/WEB-INF");
 
-		//check if filed is filled
+		//check if field is filled
 		if(email == null || email.isEmpty()) {
 			request.setAttribute("message", "Please enter your email");
 		} else 
