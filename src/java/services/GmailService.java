@@ -62,7 +62,7 @@ public class GmailService {
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 				@Override
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("leya.cheza@gmail.com", "Ch3z@r1us");
+					return new PasswordAuthentication(username, password);
 				}
 			}
 		);
@@ -82,7 +82,7 @@ public class GmailService {
 		message.setRecipient(Message.RecipientType.TO, toAddress);
 		// send the message
 		Transport transport = session.getTransport();
-		transport.connect("leya.cheza@gmail.com", "Ch3z@r1us");
+		transport.connect(username, password);
 		transport.sendMessage(message, message.getAllRecipients());
 		transport.close();
 	}

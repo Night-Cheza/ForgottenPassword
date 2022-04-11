@@ -39,22 +39,23 @@ public class AccountService {
 		try {
 			//sendin user an email with new password
 			User user = userDB.get(email);
-			String to = user.getEmail();
-			String newPassword = Arrays.toString(password);
-			user.setPassword(userDB.updatePassword(email, newPassword));
-			String subject = "New Password";
-			String template = path + "/emailTemplate/forgotPassword.html";
+				if(email.equals(user.getEmail())) {
 
-			HashMap<String, String> tags = new HashMap<>();
-			tags.put("firstname", user.getFirstName());
-			tags.put("lastname", user.getLastName());
-			tags.put("password",  user.getPassword());
+					String to = user.getEmail();
+					String newPassword = Arrays.toString(password);
+					user.setPassword(userDB.updatePassword(email, newPassword));
+					String subject = "New Password";
+					String template = path + "/emailTemplate/forgotPassword.html";
 
-			GmailService.sendMail(to, subject, template, tags);
-			return true;
+					HashMap<String, String> tags = new HashMap<>();
+					tags.put("firstname", user.getFirstName());
+					tags.put("lastname", user.getLastName());
+					tags.put("password",  user.getPassword());
+				}
+			
 		} catch (Exception e) {
 		}
 
-		return false;
+		return true;
 	}
 }
